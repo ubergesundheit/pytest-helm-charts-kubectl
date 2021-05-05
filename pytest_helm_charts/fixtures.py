@@ -2,6 +2,7 @@
 import logging
 import sys
 import random
+import string
 from typing import Callable, Iterable, Dict
 
 import pytest
@@ -98,9 +99,9 @@ def kube_cluster(
             "Error of type {} when releasing cluster. Value: {}\nStacktrace:\n{}".format(exc[0], exc[1], exc[2])
         )
 
+
 @pytest.fixture(scope="module")
 def random_namespace(request, kube_cluster):
-    kube_client
     name = f"pytest-{''.join(random.choices(string.ascii_lowercase, k=5))}"
 
     ns = Namespace(
@@ -118,4 +119,6 @@ def random_namespace(request, kube_cluster):
     yield name
 
     if not request.config.getoption("keep_namespace"):
-        kubectl(f"delete namespace {name}", output=None
+        ns = Namespace.objects(kube_cluster.kube_client).get_or_none(name=name)
+        if ns is not None:
+            ns.delete()
