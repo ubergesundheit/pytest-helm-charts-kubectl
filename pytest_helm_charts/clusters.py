@@ -67,10 +67,10 @@ class ExistingCluster(Cluster):
     # FIXME first argument -> command. if string, then split(" ")
     def exec_kubectl(self, *args: str, **kwargs) -> str:
         """Run a kubectl command against the cluster and return the output as string"""
-        # FIXME if kubeconfig_path ..
+        # FIXME if kub_econfig_path ..
         return subprocess.check_output(
             [str(self.kubectl_path), *args],
-            # env={"KUBECONFIG": str(self.kubeconfig_path)},
+            # env={"KUBECONFIG": str(self.kub_econfig_path)},
             encoding="utf-8",
             **kwargs,
         )
@@ -107,8 +107,8 @@ class ExistingCluster(Cluster):
             kwargs["namespace"] = namespace
         if output:
             kwargs["output"] = output
-        if self.kubeconfig_path:
-            kwargs["kubeconfig"] = self.kubeconfig_path
+        if self.kub_econfig_path:
+            kwargs["kubeconfig"] = self.kub_econfig_path
         if input:
             kwargs["filename"] = "-"
 
@@ -162,8 +162,8 @@ class ExistingCluster(Cluster):
         #     kwargs["namespace"] = namespace
         # if output:
         #     kwargs["output"] = output
-        if self.kubeconfig_path:
-            kwargs["kubeconfig"] = self.kubeconfig_path
+        if self.kub_econfig_path:
+            kwargs["kubeconfig"] = self.kub_econfig_path
 
         options = {f"--{option}={value}" for option, value in kwargs.items()}
 
@@ -182,7 +182,7 @@ class ExistingCluster(Cluster):
                     f"{port_to_use}:{remote_port}",
                     # *args,
                 ],
-                # env={"KUBECONFIG": str(self.kubeconfig_path)},
+                # env={"KUBECONFIG": str(self.kub_econfig_path)},
                 # FIXME use https://docs.python.org/3/library/subprocess.html#subprocess.run instead?
                 # and capture output
                 stdout=subprocess.DEVNULL,
