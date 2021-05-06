@@ -38,7 +38,7 @@ mkdocs = {version = "^1.1.2", optional = true }
 mkapi = {version = "^1.0.10", optional = true}
 
 [tool.poetry.dev-dependencies]
-autopep8 = "^1.5.2"
+autopep8 = "^1.5.5"
 tox = "^3.20.1"
 tox-pyenv = "^1.1.0"
 pytest-mock = "^3.4.0"
